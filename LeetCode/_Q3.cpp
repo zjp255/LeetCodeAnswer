@@ -84,7 +84,6 @@ public:
                 {
                     count = tempCount;
                 }
-                tempCount = 0;
                 if (it->second > index)
                     index = it->second;
                 tempCount = -1 + (i - index);
