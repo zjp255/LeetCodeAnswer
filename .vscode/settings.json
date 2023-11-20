@@ -4,6 +4,8 @@
         "iostream": "cpp",
         "unordered_map": "cpp",
         "xstring": "cpp",
-        "xhash": "cpp"
+        "xhash": "cpp",
+        "iterator": "cpp",
+        "xutility": "cpp"
     }
 }

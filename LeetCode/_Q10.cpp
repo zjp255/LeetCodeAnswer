@@ -10,76 +10,57 @@
 // 保证每次出现字符 * 时，前面都匹配到有效的字符
 #include<iostream>
 using namespace std;
-//使用动态规划
+//使用动态规划 从左往右
 class Solution {
 public:
     bool isMatch(string s, string p) {
-        bool dp[10][10];
+           bool dp[11][11];
         int sLen = s.length(),pLen = s.length();
         //初始化dp数组
-        for(int i = 0; i < 10; i++)
+        for(int i = 0; i < 11; i++)
         {
-            for(int j = 0; j < 10; j++)
+            for(int j = 0; j < 11; j++)
             {
-                dp[i][j] = false;
+                if(i == 0)
+                    dp[i][j] = true;
+                else
+                    dp[i][j] = false;
             }
         }
-        char ofstar = ' ';
-        int j = 0;
-        int count = 0;
-        for(int i = 0; i < pLen; i++)
+        
+
+        for(int i = 0; i < sLen; i++)
         {
-            for( j; j < sLen; j++)
-            {
-                if(p[i + 1] !=  '*')
+            for(int j = 0; j < pLen; j++)
+           {
+                if(p[j] == s[i] || p[j] == '.')
                 {
-                    if(p[i] == s[j] || p[i] == '.')
-                    {
-                        dp[i][j] = true;
-                        break;
-                    }else if(p[i] == ofstar)
-                    {
-                        if(count >= 1)
-                        {
-                            count--;
-                        }
-                        else
-                        {
-                            return false;
-                        }
-                    }
-                    
-                }else
-                {
-                    i++;
-                    if(p[i-1] == s[j] || p[i - 1] == '.')
-                    {
-                        ofstar = p[i - 1];
-                        dp[i][j] = true;
-                        count++;
-                    }
-                    else
-                    {
-                        break;
-                    }
-                    
+                    dp[i + 1][j + 1] = dp[i][j];
                 }
-            }
+                if(p[j] == '*')
+                {
+                    if(p[j - 1] != s[i] && p[j - 1] != '.')
+                    {
+                        dp[i + 1][j + 1] = dp[i + 1][j + 1 - 2];
+                    }else
+                    {
+                         dp[i + 1][j + 1]= dp[i + 1][j + 1-1] || dp[i + 1][j + 1-2] || dp[i + 1-1][j + 1];
+                    }
+                }
+
+           }
         }
 
-        for(int i = 0; i < 10; i++)
-        {
-            for(int j = 0; j < 10; j++)
-            {
-                dp[j][i] = false;
-            }
-        }
 
+
+        return dp[sLen][pLen];
     }
 };
 
 
 int main()
 {
+    Solution s;
+    cout<<s.isMatch("aab","c*a*b")<<endl;
     return 0;
 }
