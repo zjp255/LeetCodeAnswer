@@ -13,7 +13,7 @@ using namespace std;
 class Solution {
 public:
     vector<vector<int>> fourSum(vector<int> nums, int target) {
-        sort(nums.begin(), nums.end());
+        //sort(nums.begin(), nums.end());
          int len = nums.size();
         vector<vector<int>> ans;
         for(int i = 0; i < len - 3; i++)
@@ -63,7 +63,7 @@ public:
 class Solution2 {
 public:
     vector<vector<int>> fourSum(vector<int>& nums, int target) {
-        sort(nums.begin(), nums.end());
+        //sort(nums.begin(), nums.end());
          int len = nums.size();
         vector<vector<int>> ans;
         for(int i = 0; i < len - 3; i++)
