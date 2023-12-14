@@ -104,11 +104,80 @@ public:
     }
 };
 
+//0ms 100% 6.5mb 5.6%
+class Solution2 {
+public:
+     int divide(int dividend, int divisor) {
+         int sign = (dividend>>31) == (divisor>>31)?1:-1;
+        dividend = dividend > 0? -dividend:dividend;
+        divisor = divisor > 0? -divisor:divisor;
+        vector<vector<int>> map;
+        int ans = 0;
+        for(int i = 0; i <= 32; i++)
+        {
+            int temp = divisor<<i;
+            if(temp >= INT_MIN>>1)
+            {
+                if(temp >= dividend)
+                {
+                    map.push_back({temp,1<<i});
+                }else{
+                    break;
+                }
+            }
+            else{
+                break;
+            }
+        }
+
+        while(dividend <= divisor)
+        {
+            if(map.empty())
+            {
+                if(dividend <= divisor)
+                {
+                    return sign;
+                }
+                return 0;
+            }
+            vector<int> temp = map.back();
+            if(temp.empty())
+                return 0;
+            if(temp[0] >= dividend)
+            {
+                dividend -= temp[0];
+                if(temp[1] <= INT_MIN>>1 && ans <= INT_MIN>>1)
+                { 
+                    ans = INT_MIN;
+                    break;
+                }
+                 else
+                {
+                    ans -= temp[1];
+                }
+            }
+            if(temp[0] <dividend)
+            {
+                map.pop_back();
+            }
+        }
+        if(sign == 1)
+        {
+            if(ans == INT_MIN)
+                return INT_MAX;
+            return -ans;
+        }else{
+           return ans;
+        }
+     }
+      
+};
+
 
 
 int main()
 {
-    Solution1 s;
-    s.divide(-2147483648,1);
+    Solution2 s;
+    cout<<s.divide(2147483647,-1);
 }
  
