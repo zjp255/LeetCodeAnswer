@@ -19,6 +19,9 @@ public:
         unordered_map<string,bool> hashMap;
         int wordsLen = words.size();
         int sLen = s.length();
+        int wLen = words.size();
+        int wordLen = words[0].length();
+        vector<int> ans;
         for(int i = 0; i < wordsLen; i++)
         {
             hashMap[words[i]] = true;
@@ -27,12 +30,25 @@ public:
         for(int i = 0; i < sLen; i++)
         {
             unordered_map<string,bool> temp = hashMap;
-            string tempS = s.substr(i,3);
-            if(temp[tempS] == true)
+            
+            for(int j = 0; j < wLen; j++)
             {
-                
+                string tempS = s.substr(i + j * wordLen, wordLen);
+                if(temp[tempS] == true)
+                {
+                    temp[tempS] = false;
+                    if(j == sLen - 1)
+                    {
+                        ans.push_back(i);
+                    }
+                }
+                else{
+                    break;
+                }
             }
+            
         }
+        return ans;
         
     }
 };
