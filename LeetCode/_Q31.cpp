@@ -16,12 +16,47 @@
 #include <unordered_map>
 #include <queue>
 using namespace std;
+//0ms 100% 14.3Mb 5%
 class Solution {
 public:
     void nextPermutation(vector<int>& nums) {
         int len = nums.size();
-        int index1 = 0;
-        int index2 = 0;
-        int jidehuafa;
+        for(int i = len - 1; i >= 0; i--)
+        {
+            if(i == 0)
+            {
+                fanZhuan(nums,0);
+                return;
+            }
+            else{
+                if(nums[i - 1] < nums[i])
+                {
+                    int j = len - 1;
+                    while(nums[j] <= nums[i - 1])
+                    {
+                        j--;
+                    }
+                    swap(nums,i - 1,j);
+                    fanZhuan(nums,i);
+                    return;
+                }
+            }
+        }
+    }
+
+    void fanZhuan(vector<int>& nums,int start)
+    {
+        int len = nums.size() + start;
+        for(int j = start; j < len / 2; j++)
+        {
+            swap(nums,j,len - j - 1);
+        }
+    }
+
+    void swap(vector<int>& nums,int left,int right)
+    {
+        int temp = nums[right];
+        nums[right] = nums[left];
+        nums[left] = temp;
     }
 };
