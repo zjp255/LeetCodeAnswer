@@ -24,7 +24,7 @@ public:
 
     void combines(int start,int tempk,int n, int k)
     {
-        for(int i = start; i <= n; i++)
+        for(int i = start; i <= n - (k - tempk) + 1; i++)
         {
             part[tempk] = i;
             if(tempk == k - 1)
