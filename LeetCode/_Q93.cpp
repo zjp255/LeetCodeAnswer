@@ -16,6 +16,7 @@ public:
     unordered_map<char,int> hashMap = {{'0',0},{'1',1},{'2',2},{'3',3},{'4',4},{'5',5},{'6',6},{'7',7},{'8',8},{'9',9}};
     string part;
     string part2;
+    string part3;
     vector<string> restoreIpAddresses(string s) {
         combine(s,0,0);
         return ans;
