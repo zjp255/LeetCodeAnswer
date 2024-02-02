@@ -9,55 +9,41 @@
 #include <queue>
 using namespace std;
 
-
+//0ms 100% 10.19Mb 10%
 class Solution {
 public:
     vector<string> ans;
     unordered_map<char,int> hashMap = {{'0',0},{'1',1},{'2',2},{'3',3},{'4',4},{'5',5},{'6',6},{'7',7},{'8',8},{'9',9}};
-    string part;
-    string part2;
-    string part3;
+    vector<string> part;
     vector<string> restoreIpAddresses(string s) {
-        combine(s,0,0);
+        combine(s,0);
         return ans;
     }
 
-    void combine(string s,int size,int index)
+    void combine(string s,int index)
     {
-        if(index == s.length())
+        if(part.size() == 4 && index == s.length())
         {
-            ans.push_back(temp);
-        }else{
-            for(int i = 1; i <= s.length() - index >= 3?3:s.length() - index; i++)
+            ans.push_back(part[0] + "." + part[1] + "." + part[2] + "." + part[3]);
+        }else if(part.size() < 4)
+        {
+            for(int i = 1; i <=  (s.length() - index >= 3?3:s.length() - index); i++)
             {
-                int tempInt = 0;
-                while(temp.length() < size + i)
+                if(i == 3)
                 {
-                    temp += s[index];
-                    tempInt = tempInt * 10 + hashMap[s[index]]; 
-                    index++;
-                    cout<<index<<endl;
+                    int temp = hashMap[s[index]] * 100 + hashMap[s[index + 1]] * 10 + hashMap[s[index + 2]];
+                    if(temp > 255)
+                    {
+                        break;
+                    }
                 }
-                if(index != s.length())
-                {
-                    temp += '.';
-                }
-                if(count > 3)
-                {
-                    break;
-                }
-                if(tempInt > 255 || ( i > 1 && hashMap[s[index - i]] == '0'))
+                part.push_back(s.substr(index,i));
+                combine(s,index + i);
+                part.pop_back();
+                if(i == 1 && s[index] == '0')
                 {
                     break;
                 }
-                combine(s,size + i + 1,index);
-                while(temp.length() > size)
-                {
-                    temp.pop_back();
-                    index--;
-                    cout<<index<<endl;
-                }
-                index++;
             }
         }
     }
