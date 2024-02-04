@@ -25,7 +25,7 @@ public:
         {
             ans.push_back(part);
         }else{
-            for(int i = start; i <= nums.size(); i++)
+            for(int i = start; i < nums.size(); i++)
             {
                 part.push_back(nums[i]);
                 combine(nums,i + 1,targetLen);
