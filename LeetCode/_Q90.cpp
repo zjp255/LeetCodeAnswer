@@ -44,3 +44,33 @@ public:
     }
 
 };
+//0ms 100% 9.02MB 17.55%
+class Solution1 {
+public:
+  vector<vector<int>> ans;
+    vector<int> part;
+    vector<vector<int>> subsetsWithDup(vector<int>& nums) {
+        sort(nums.begin(),nums.end());
+        vector<bool> used(nums.size(), false);
+        combine(nums,0,used);
+        return ans;
+    }
+
+    void combine(vector<int>& nums,int start,vector<bool>& used)
+    { 
+         ans.push_back(part);
+        for(int i = start; i < nums.size(); i++)
+        {
+            if( i > 0 && nums[i] == nums[i - 1]  && used[i - 1] == false)
+            {
+                continue;
+            }
+            part.push_back(nums[i]);
+           used[i] = true;
+            combine(nums,i + 1,used);
+            used[i] = false;
+            part.pop_back();    
+        }
+        
+    }
+};
