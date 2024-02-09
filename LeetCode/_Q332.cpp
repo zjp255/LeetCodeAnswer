@@ -13,11 +13,32 @@ using namespace std;
 
 class Solution {
 public:
-    vector<string> ans;
+   vector<vector<string>> ans;
+    vector<string> part;
+
     vector<string> findItinerary(vector<vector<string>>& tickets) {
         vector<bool> used(tickets.size(),false);
         combine(tickets,0,used);
-        return ans;
+        int ansIndex = 0;
+        bool isBroke = false;
+        for(int i = 0; i < ans[0].size() * 3; i++)
+        {
+            for(int j = 0; j < ans.size();j++)
+            {                
+                if(ans[j][i / 3][i % 3] <= ans[ansIndex][i / 3][i % 3])
+                {
+                    cout<<ans[j][i / 3][i % 3]<<" "<<ans[ansIndex][i / 3][i % 3]<<endl;
+                    ansIndex = j;
+                    isBroke = true;
+                }
+            }
+            if(isBroke == true)
+            {
+                break;
+            }
+        }
+        
+        return ans[ansIndex];
     }
 
     void combine(vector<vector<string>>& tickets,int usedCount,vector<bool>& used)
@@ -26,27 +47,39 @@ public:
         {
             for(int i = 0; i < tickets.size(); i++)
             {
-                if(ans.size() > 0)
+                if(part.size() > 0)
                 {
-                    if(tickets[i][0] != ans.back() || used[i] == true)
+                    if(tickets[i][0] != part.back() || used[i] == true)
                     {
                         continue;
                     }
-                    ans.push_back(tickets[i][1]);
-                    used[i] = true;
+                    part.push_back(tickets[i][1]);
+                    used[i] = true;              
                     combine(tickets,usedCount + 1,used);
                     used[i] = false;
-                    ans.pop_back();
+                    part.pop_back();
                 }else{
-                    ans.push_back(tickets[i][0]);
-                    ans.push_back(tickets[i][1]);
+                    part.push_back(tickets[i][0]);
+                    part.push_back(tickets[i][1]);
                     used[i] = true;
                     combine(tickets,usedCount + 1,used);
                     used[i] = false;
-                    ans.pop_back();
-                    ans.pop_back();
+                    part.pop_back();
+                    part.pop_back();
                 }
             }
         }
+        else{
+            ans.push_back(part);
+        }
     }
 };
+
+int main()
+{
+    Solution s;
+    vector<vector<string>> tickets;
+    tickets = {{"JFK","ATL"},{"ORD","PHL"},{"JFK","ORD"},{"PHX","LAX"},{"LAX","JFK"},{"PHL","ATL"},{"ATL","PHX"}};
+    vector<string> result = s.findItinerary(tickets);
+    return 0;
+}
