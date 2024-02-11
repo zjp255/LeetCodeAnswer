@@ -5,12 +5,13 @@
 // 例如，行程 ["JFK", "LGA"] 与 ["JFK", "LGB"] 相比就更小，排序更靠前。
 // 假定所有机票至少存在一种合理的行程。且所有的机票 必须都用一次 且 只能用一次。
 
-#include<iostream>
-#include<vector>
+#include <iostream>
+#include <vector>
 #include <unordered_map>
+#include <map>
 #include <queue>
 using namespace std;
-
+//无法通过测试
 class Solution {
 public:
    vector<vector<string>> ans;
@@ -21,20 +22,22 @@ public:
         combine(tickets,0,used);
         int ansIndex = 0;
         bool isBroke = false;
-        for(int i = 0; i < ans[0].size() * 3; i++)
+        if(tickets.size() > 2)
         {
-            for(int j = 0; j < ans.size();j++)
-            {                
-                if(ans[j][i / 3][i % 3] <= ans[ansIndex][i / 3][i % 3])
-                {
-                    cout<<ans[j][i / 3][i % 3]<<" "<<ans[ansIndex][i / 3][i % 3]<<endl;
-                    ansIndex = j;
-                    isBroke = true;
-                }
-            }
-            if(isBroke == true)
+            for(int i = 0; i < ans[0].size() * 3; i++)
             {
-                break;
+                for(int j = 0; j < ans.size();j++)
+                {                
+                    if(ans[j][i / 3][i % 3] <= ans[ansIndex][i / 3][i % 3] )
+                    {
+                        ansIndex = j;
+                        isBroke = true;
+                    }
+                }
+                if(isBroke == true)
+                {
+                    break;
+                }
             }
         }
         
@@ -71,6 +74,28 @@ public:
         }
         else{
             ans.push_back(part);
+        }
+    }
+};
+
+class Solution1 {
+public:
+    vector<string> ans;
+    unordered_map<string,map<string,int>> map;
+    vector<string> findItinerary(vector<vector<string>>& tickets) {
+        for(int i = 0; i < tickets.size(); i++)
+        {
+            map[tickets[i][0]][tickets[i][1]]++;
+        }
+    }
+
+    bool combine(int ticketsSize)
+    {
+        if(ans.size() == ticketsSize + 1)
+        {
+            return true;
+        }else{
+            
         }
     }
 };
