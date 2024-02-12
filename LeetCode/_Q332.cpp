@@ -77,7 +77,7 @@ public:
         }
     }
 };
-
+//18ms 17.1MB17.77%
 class Solution1 {
 public:
     vector<string> ans;
@@ -87,6 +87,9 @@ public:
         {
             map[tickets[i][0]][tickets[i][1]]++;
         }
+        ans.push_back("JFK");
+        combine(tickets.size());
+        return ans;
     }
 
     bool combine(int ticketsSize)
@@ -95,8 +98,19 @@ public:
         {
             return true;
         }else{
-            
+            for(pair<const string,int>& element : map[ans.back()])
+            {
+                if(element.second > 0)
+                {
+                    ans.push_back(element.first);
+                    element.second--;
+                    if(combine(ticketsSize)) return true;
+                    element.second++;
+                    ans.pop_back();
+                }
+            }
         }
+        return false;
     }
 };
 
