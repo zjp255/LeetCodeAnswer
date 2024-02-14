@@ -17,6 +17,62 @@ using namespace std;
 class Solution {
 public:
     void solveSudoku(vector<vector<char>>& board) {
+        vector<vector<bool>> used(27,vector<bool>(9,false));
+        initUsed(board,used);
+        combine(board,used,0);
+    }
 
+    void initUsed(vector<vector<char>>& board,vector<vector<bool>>& used)
+    {
+        for(int i = 0; i < 9; i++)
+        {
+            for(int j = 0; j < 9; j++)
+            {
+                if(board[i][j] != '.')
+                {
+                    used[i][board[i][j] - 49] = true;
+                    used[j + 9][board[i][j] - 49] = true;
+                    used[(i % 3)*3 + j % 3 + 18][board[i][j] - 49] = true;
+                }
+            }
+        }
+    }
+
+    bool combine(vector<vector<char>>& board,vector<vector<bool>>& used,int count)
+    {
+        if(count > 81)
+        {
+            return true;
+        }
+        if(board[count/9][count%9] != '.')
+        {
+            int i = count/9;
+            int j = count%9;
+            for(int x = 1; x <= 9; x++)
+            {
+                if(used[i][x - 1] == true ||
+                used[j + 9][x - 1] == true ||
+                    used[(i % 3)*3 + j % 3 + 18][x - 1] == true)
+                    {
+                        continue;
+                    }
+                    board[i][j] = x + 48;
+                    used[i][x - 1] = true;
+                    used[j + 9][x - 1] = true;
+                    used[(i % 3)*3 + j % 3 + 18][x - 1] = true;
+                    if(combine(board,used, i + (j + 1) / 9)) return true;
+                    board[i][j] = '.';
+                    used[i][x - 1] = false;
+                    used[j + 9][x - 1] = false;
+                    used[(i % 3)*3 + j % 3 + 18][x - 1] = false;
+            }
+            return false;
+        }else{
+            combine(board, used,count + 1);
+        }   
     }
 };
+
+int main()
+{
+}
