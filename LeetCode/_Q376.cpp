@@ -13,45 +13,19 @@
 #include <queue>
 using namespace std;
 
+//0ms 100% 8.6MB 24.97%
 class Solution {
 public:
     int wiggleMaxLength(vector<int>& nums) {
-        int left = 0, right = 1;
-        bool state = false;
-        while(left < nums.size() && right < nums.size())
+       for(int i = 0; i < nums.size() - 1;i++)
         {
-            int answer = nums[right] - nums[left];
-            if(left == 0)
+            if((i > 0 && ((nums[i] - nums[i - 1] > 0 && nums[i + 1] - nums[i] > 0) || (nums[i] - nums[i - 1] < 0 && nums[i + 1] - nums[i] < 0)))|| (nums[i] == nums[i + 1]))
             {
-                if(answer == 0)
-                {
-                    right++;
-                }else if(answer  > 0){
-                    state = true;
-                }else{
-                    state = false;
-                }
-            }
-            else{
-                if(answer == 0)
-                {
-                    right++;
-                }else if(answer  > 0){
-                    if(state == true)
-                    {
-                        right++;
-                    }
-                    else{
-                        while(nums[right] > nums[left])
-                        {
-
-                        }
-                    }
-                }else{
-                    
-                }
+                nums.erase(nums.begin() + i);
+                i--;
             }
         }
+        return nums.size();
     }
 };
 
