@@ -12,7 +12,52 @@
 #include <map>
 #include <queue>
 using namespace std;
-//超时
+
+class Solution {
+public:
+    int wiggleMaxLength(vector<int>& nums) {
+        int left = 0, right = 1;
+        bool state = false;
+        while(left < nums.size() && right < nums.size())
+        {
+            int answer = nums[right] - nums[left];
+            if(left == 0)
+            {
+                if(answer == 0)
+                {
+                    right++;
+                }else if(answer  > 0){
+                    state = true;
+                }else{
+                    state = false;
+                }
+            }
+            else{
+                if(answer == 0)
+                {
+                    right++;
+                }else if(answer  > 0){
+                    if(state == true)
+                    {
+                        right++;
+                    }
+                    else{
+                        while(nums[right] > nums[left])
+                        {
+
+                        }
+                    }
+                }else{
+                    
+                }
+            }
+        }
+    }
+};
+
+
+
+//回溯法 超时
 class Solution {
 public:
     int ans = 0;
