@@ -6,8 +6,39 @@
 #include <unordered_map>
 #include <map>
 #include <queue>
+#include <list>
 using namespace std;
-//99ms 41.93% 27.95MB 7.15%
+//21ms 95% 16MB 23%
+class Solution1 {
+public:
+    vector<vector<int>> reconstructQueue(vector<vector<int>>& people) {
+        sort(people.begin(),people.end(),cmp_secend);
+        list<vector<int>> ans;
+        for(int i = 0; i < people.size(); i++)
+        {
+            int pos = people[i][1];
+            std::list<vector<int>>::iterator it = ans.begin();
+            while (pos--) { // 寻找在插入位置
+                it++;
+            }
+            ans.insert(it, people[i]);
+        }
+        return vector<vector<int>>(ans.begin(),ans.end());
+    }
+
+    static bool cmp_secend(vector<int>& x,vector<int>& y)
+    {
+        if(x[0] == y[0])
+        {
+            return x[1] < y[1];
+        }else{
+            return x[0] > y[0];
+        }
+    }
+};
+
+
+//42ms 56.93% 14.91MB 36.46%
 class Solution {
 public:
     vector<vector<int>> reconstructQueue(vector<vector<int>>& people) {
@@ -35,7 +66,7 @@ public:
         return ans;
     }
 
-    static bool cmp_secend(vector<int> x,vector<int> y)
+    static bool cmp_secend(vector<int>& x,vector<int>& y)
     {
         if(x[1] != y[1])
         {
