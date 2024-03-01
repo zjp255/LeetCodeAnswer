@@ -19,10 +19,47 @@ struct TreeNode {
     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
 };
+//4ms 91.22% 19.59MB 62%
+class Solution {
+public:
+     int ans = 0;
+    int minCameraCover(TreeNode* root) {
+        if(traversal(root) == 0)
+         return ++ans;
+        return ans;
+    }
+    int traversal(TreeNode* root)
+    {
+        if(root == NULL)
+        {
+            return -1;
+        }
+        if((root->left == NULL && root->right == NULL))
+        {
+            return 0;
+        }
+        int left = traversal(root->left);
+        int right = traversal(root->right);
+        if(left == 0 || right == 0)
+        {
+             root->val = 1;
+             ans++;
+        }else if(left == 1 || right == 1)
+        {
+            root->val = 2;
+            if(left == 0 || right == 0)
+            {
+                ans++;
+            }
+        }
+        return root->val;
+    }
+};
+
  //无法通过测试
 class Solution {
 public:
-      int ans1 = 0;
+    int ans1 = 0;
     int ans2 = 0;
     int layerCount = 0;
     int minCameraCover(TreeNode* root) {
