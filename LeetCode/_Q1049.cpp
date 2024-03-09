@@ -10,20 +10,24 @@
 #include <unordered_map>
 #include <queue>
 using namespace std;
-//贪心
+//3ms 65% 9.64Mb 40%
 class Solution {
 public:
     int lastStoneWeightII(vector<int>& stones) {
-        vector<vector<int>> dp(stones.size() + 1,vector<int>(stones.size() + 1));
-        //dp[i][j]表示0 ~i物品任取 容量为j的最小价值
-        //dp[i][j] = max(dp[i - 1][j],dp[i - 1][j - 1] -stones[i])
-        for(int i = 1; i <= stones.size(); i++)
+         int sum = 0;
+         for (int i = 0; i < stones.size(); i++)
+         {
+            sum += stones[i];
+         }
+         int target = sum / 2;
+         vector<int> dp(target + 1);
+        for (int i = 0; i < stones.size(); i++)
         {
-            for(int j = 1; j <= stones.size(); j++)
+            for (int j = target; j >= stones[i];j--)
             {
-                
+                dp[j] = max(dp[j],dp[j - stones[i]] + stones[i]);
             }
         }
-
+        return sum - dp[target] - dp[target];
     }
 };
