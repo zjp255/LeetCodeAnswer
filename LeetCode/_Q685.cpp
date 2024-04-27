@@ -12,14 +12,51 @@
 #include <unordered_map>
 #include <queue>
 using namespace std;
-
+//0ms 100% 12.29Mb 79%
 class Solution {
 public:
     vector<int> father;
+    int n = 0;
     vector<int> findRedundantDirectedConnection(vector<vector<int>>& edges) {
-        int n = edges.size();
-        vector<int> result;
+        n = edges.size();
         father = vector<int>(n + 1);
+        vector<int> inDgree(n + 1,0);
+        for (int i = 0; i < n; i++)
+        {
+            inDgree[edges[i][1]]++;
+        }
+        
+        vector<int> vec;
+
+        for (int i = n - 1; i >= 0; i--)
+        {
+            if(inDgree[edges[i][1]] == 2)
+            {
+                vec.push_back(i);
+            }
+        }
+
+        if(vec.size() > 0)
+        {
+            if(isTree(edges,vec[0]))
+            {
+                return edges[vec[0]];
+            }else{
+                return edges[vec[1]];
+            }
+        }
+
+        return removeEdge(edges);
+        
+    }
+
+    int find(int u)
+    {
+        return u == father[u]?u:father[u] = find(father[u]);
+    }
+
+    bool isTree(vector<vector<int>>& edges, int deleteEdge)
+    {
         for (int i = 0; i <= n; i++)
         {
             father[i] = i;
@@ -27,16 +64,30 @@ public:
 
         for (int i = 1; i <= n; i++)
         {
+            if(i == deleteEdge + 1)
+                continue;
             int u = find(edges[i - 1][0]);
             int v = find(edges[i - 1][1]);
-            if(u == v) result = edges[i - 1];
+            if(u == v) return false;
             father[v] = u;
         }
-        return result;
+        return true;
     }
 
-    int find(int u)
+    vector<int> removeEdge(vector<vector<int>>& edges)
     {
-        return u == father[u]?u:father[u] = find(father[u]);
+        for (int i = 0; i <= n; i++)
+        {
+            father[i] = i;
+        }
+        
+        for (int i = 1; i <= n; i++)
+        {
+            int u = find(edges[i - 1][0]);
+            int v = find(edges[i - 1][1]);
+            if(u == v) return edges[i - 1];
+            father[v] = u;
+        }
+        return {};
     }
 };
