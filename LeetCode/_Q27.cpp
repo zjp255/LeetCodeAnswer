@@ -9,6 +9,24 @@
 #include <unordered_map>
 #include <queue>
 using namespace std;
+//0ms 100% 10.20Mb 72.57%
+class Solution1 {
+public:
+    int removeElement(vector<int>& nums, int val) {
+        int left = 0;
+        for (int i = 0; i < nums.size(); i++)
+        {
+            if(nums[i] != val)
+            {
+                nums[left] = nums[i];
+                left++;
+            }
+        }
+        return left;
+    }
+};
+
+
 //双指针
 //0ms 100% 8.9MB46.2%
 class Solution {
