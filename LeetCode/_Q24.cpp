@@ -12,6 +12,32 @@ struct ListNode {
       ListNode(int x) : val(x), next(nullptr) {}
       ListNode(int x, ListNode *next) : val(x), next(next) {}
  };
+//0ms 100% 9.13MB 99.16%
+class Solution1 {
+public:
+    ListNode* swapPairs(ListNode* head) {
+        if(head == NULL)
+            return head;
+        ListNode* front = new ListNode();
+        front->next = head;
+        ListNode* first = head;
+        ListNode* second = head->next;
+        head = front;
+        while(second)
+        {
+            front->next = second;
+            first->next = second->next;
+            second->next = first;
+            front = first;
+            first = first->next;
+            if(first == NULL)
+                break;
+            second = first->next;
+        }
+        return head->next;
+    }
+};
+
 //0ms100% 7.77MB24.10%
 class Solution {
 public:
