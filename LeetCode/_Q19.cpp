@@ -11,6 +11,31 @@ using namespace std;
       ListNode(int x) : val(x), next(nullptr) {}
       ListNode(int x, ListNode *next) : val(x), next(next) {}
  };
+//0ms 100% 13MB 73.9%
+class Solution1 {
+public:
+    ListNode* removeNthFromEnd(ListNode* head, int n) {
+        ListNode* temp = new ListNode();
+        temp->next = head;
+        head = temp;
+        ListNode* left = head,* right = head;
+        int gap = 0;
+        while (right != NULL)
+        {
+            right = right->next;
+            if(gap <= n)
+                gap++;
+            else{
+                left = left->next;
+            }
+        }
+        left->next = left->next->next;
+        return head->next;
+    }
+};
+
+
+
  
 //0ms 100% 10.75MB 12.25%
 class Solution {
