@@ -12,6 +12,80 @@
 #include <vector>
 #include <unordered_map>
 using namespace std;
+//哈希表
+//4ms 92.79% 13.84Mb 20%
+class Solution3 {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        unordered_map<int,int> map;
+        for (int i = 0; i < nums.size(); i++)
+        {
+            auto temp = map.find(target - nums[i]);
+            if(temp != map.end())
+            {
+                return {temp->second,i};
+            }
+            map.insert(pair<int,int>(nums[i],i));
+        }
+        return {};
+    }
+};
+
+
+//哈希表
+//3ms 97.75% 13.87MB 14.90%
+class Solution2 {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        unordered_map<int,int> map;
+        for (int i = 0; i < nums.size(); i++)
+        {
+            int temp = target - nums[i];
+            if(map.count(temp) != 0)
+            {
+                return {i,map[temp]};
+            }
+            map[nums[i]] = i;
+        }
+        return {};
+    }
+};
+//哈希表
+//8ms 74.12% 15.37Mb 5.20%
+class Solution1 {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        unordered_map<int,int> map;
+        for (int i = 0; i < nums.size(); i++)
+        {
+            map[nums[i]] = i;
+        }
+        for (int i = 0; i < nums.size(); i++)
+        {
+            int temp = target - nums[i];
+            if(map.count(temp) != 0 && map[temp] != i)
+            {
+                return {i,map[temp]};
+            }
+        }
+        return {};
+    }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 class Solution
 {
 public:
