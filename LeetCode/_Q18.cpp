@@ -8,7 +8,48 @@
 #include<iostream>
 #include<vector>
 #include <unordered_map>
+#include <algorithm>
 using namespace std;
+//20ms 78.50% 15.57MB 42%
+class Solution {
+public:
+    vector<vector<int>> fourSum(vector<int>& nums, int target) {
+         sort(nums.begin(),nums.end());
+        vector<vector<int>> ans;
+        for (int i = 0; i < nums.size(); i++)
+        {
+            if(nums[i] > target && nums[i] > 0)
+                break;
+            if(i > 0 && nums[i] == nums[i - 1])
+                continue;
+            for (int j = i + 1; j < nums.size(); j++)
+            {
+                if(nums[i] + nums[j] > target && nums[j] + nums[i] >= 0)
+                    break;
+                if(j > i + 1 && nums[j] == nums[j - 1])
+                    continue;
+                int left = j + 1;
+                int right = nums.size() - 1;
+                while(left < right)
+                {
+                    long sum = (long)target - nums[i] - nums[j] - nums[left] - nums[right];
+                    if(sum > 0) left++;
+                    else if(sum < 0) right--;
+                    else{
+                        ans.push_back({nums[i] , nums[j] , nums[left] , nums[right]});
+                        while(left < right && nums[right] == nums[right - 1]) right--;
+                        while(left < right && nums[left] == nums[left + 1]) left++;
+                        left++;
+                        right--;
+                    }
+                }
+            }
+        }
+        return ans;
+    }
+};
+
+
 //96ms 23.15% 13.18mb 63.98%
 class Solution {
 public:
