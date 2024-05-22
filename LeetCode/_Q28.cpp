@@ -6,6 +6,59 @@
 #include <unordered_map>
 #include <queue>
 using namespace std;
+//kmp
+//0ms 100% 7.49mb 22.02%
+class Solution {
+public:
+   int strStr(string haystack, string needle) {
+        vector<int> next = getNextNums(needle);
+        int j = 0;
+        for (int i = 0; i < haystack.length();i++)
+        {
+            while(j > 0 && haystack[i] != needle[j]) { // 不匹配
+                j = next[j - 1]; // j 寻找之前匹配的位置
+            }
+            if(haystack[i] == needle[j])
+            {
+                j++;
+                if(j == needle.length())
+                {
+                    return i - j + 1;
+                }
+            }
+            
+        }
+        return -1;
+    }
+
+    vector<int> getNextNums(string& a)
+    {
+        vector<int> next(a.length(), 0);
+        int left = 0;
+        int right = 0;
+        for (int i = 1; i < a.length(); i++)
+        {
+            left = 0;
+            right = left + 1;
+            while(right <= i)
+            {
+                if(a[left] == a[right])
+                {
+                    left++;
+                    right++;
+                }else{
+                    right = right - left + 1;
+                    left = 0;
+                }
+            }
+            next[i] += left;
+        }
+        return next;
+    }
+};
+
+
+
 //0ms 100% 6.50% 46.10%
 class Solution {
 public:
