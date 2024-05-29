@@ -8,7 +8,35 @@
 #include<iostream>
 #include<vector>
 #include <unordered_map>
+#include <stack>
 using namespace std;
+//0ms 100% 8.04MB 11%
+class Solution {
+public:
+    bool isValid(string s) {
+        stack<int> st;
+        for (int i = 0; i < s.length(); i++)
+        {   
+            if(s[i] == '(' || s[i] == '[' || s[i] == '{')
+                st.push(s[i]);
+            else if(!st.empty()){
+                if((s[i] == ')' && st.top() == '(') ||
+                    (s[i] == ']' && st.top() == '[') ||
+                    (s[i] == '}' && st.top() == '{') )
+                {
+                    st.pop();
+                }else{
+                    return false;
+                }
+            }
+            else
+                return false;
+        }
+        return st.empty();
+    }
+};
+
+
 //0ms100% 6.5MB61.69%
 class Solution {
 public:
