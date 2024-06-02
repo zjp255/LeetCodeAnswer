@@ -5,29 +5,33 @@
 #include<iostream>
 #include<vector>
 #include <unordered_map>
-#include <queue>
+#include <deque>
 #include <stack>
 using namespace std;
 
+//168ms 86% 133.94MB 58%
 class Solution {
 public:
     vector<int> maxSlidingWindow(vector<int>& nums, int k) {
-        vector<int> ans;
-        queue<int> que;
-        int max = 0;
-        for (int i = 0; i < nums.size(); i++)
-        {
-            if(que.size() < k)
-            {
-                que.push(nums[i])
+         int n = nums.size();
+        deque<int> q;
+        for (int i = 0; i < k; ++i) {
+            while (!q.empty() && nums[i] >= nums[q.back()]) {
+                q.pop_back();
             }
-            else{
-                ans.push_back(max);
-                
-               
+            q.push_back(i);
+        }
+
+        vector<int> ans = {nums[q.front()]};
+        for (int i = k; i < n; ++i) {
+            while (!q.empty() && nums[i] >= nums[q.back()]) {
+                q.pop_back();
             }
-            if(nums[i] > max)
-                max = nums[i];
+            q.push_back(i);
+            while (q.front() <= i - k) {
+                q.pop_front();
+            }
+            ans.push_back(nums[q.front()]);
         }
         return ans;
     }
