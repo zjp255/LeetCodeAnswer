@@ -1,6 +1,6 @@
-// 给你二叉树的根节点 root ，返回它节点值的 前序 遍历。
 
- #include<iostream>
+// 给你一棵二叉树的根节点 root ，返回其节点值的 后序遍历 。
+#include<iostream>
 #include<vector>
 #include <unordered_map>
 #include <queue>
@@ -20,7 +20,7 @@ struct TreeNode {
   //0ms 100% 9.7MB 35.96%
  class Solution {
 public:
-    vector<int> preorderTraversal(TreeNode* root) {
+    vector<int> postorderTraversal(TreeNode* root) {
         vector<int> ans;
         dfs(root, ans);
         return ans;
@@ -29,8 +29,8 @@ public:
     void dfs(TreeNode *root,vector<int>& ans){
         if(root == NULL)
             return;
-        ans.push_back(root->val);
         dfs(root->left,ans);
         dfs(root->right,ans);
+        ans.push_back(root->val);
     }
 };
