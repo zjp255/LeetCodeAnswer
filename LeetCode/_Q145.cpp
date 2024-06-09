@@ -5,6 +5,8 @@
 #include <unordered_map>
 #include <queue>
 #include <unordered_set>
+#include <stack>
+#include <algorithm>
 using namespace std;
 
 
@@ -17,6 +19,28 @@ struct TreeNode {
       TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
       TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
   };
+  //0ms 100% 9.68MB 49%
+class Solution1 {
+public:
+    vector<int> postorderTraversal(TreeNode* root) {
+        stack<TreeNode*> st;
+        vector<int> ans;
+        if(root == NULL) return ans;
+        st.push(root);
+        while(!st.empty())
+        {
+            TreeNode* temp = st.top();
+            st.pop();
+            ans.push_back(temp->val);
+            if(temp->left) st.push(temp->left);
+            if(temp->right) st.push(temp->right);
+        }
+        reverse(ans.begin(),ans.end());
+        return ans;
+    }
+};
+
+
   //0ms 100% 9.7MB 35.96%
  class Solution {
 public:
