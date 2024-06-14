@@ -52,6 +52,8 @@
         "xutility": "cpp",
         "map": "cpp",
         "xtree": "cpp",
-        "stack": "cpp"
+        "stack": "cpp",
+        "sstream": "cpp",
+        "string": "cpp"
     }
 }
