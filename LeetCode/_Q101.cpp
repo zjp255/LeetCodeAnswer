@@ -12,7 +12,7 @@ using namespace std;
       TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
       TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
   };
- //对此
+ //对此bbb
 class Solution {
 public:
     bool isSymmetric(TreeNode* root) {
