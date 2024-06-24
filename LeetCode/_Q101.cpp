@@ -12,37 +12,19 @@ using namespace std;
       TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
       TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
   };
- //对此bbb
+ //3ms 75% 16.94MB 68.27%
 class Solution {
 public:
-    bool isSymmetric(TreeNode* root) {
-        queue<TreeNode*> que;
-        if(root) que.push(root);
-        else
+      bool check(TreeNode* left ,TreeNode* right)
+    {
+        if(!left && !right)
+            return true;
+        if(!left || !right)
             return false;
-        int lastLayerCount = 1;
-        while (!que.empty())
-        {
-            int size = que.size();
-            
-            for (int i = 0; i < size; i++)
-            {
-                TreeNode* temp = que.front();
-                que.pop();
-                if(temp->left) 
-                {
-                    que.push(temp->left);
-                    lastLayerCount++;
-                }
-                if(temp->right)
-                {
-                    que.push(temp->right);
-                    lastLayerCount++;
-                }
-                if(lastLayerCount != 1 && lastLayerCount * 2 != size)
-                    return false;
-            }
-        }
-        return true;
+        return left->val == right->val && check(left->left,right->right) && check(left->right, right->left); 
+    }
+
+    bool isSymmetric(TreeNode* root) {
+        return check(root, root);
     }
 };
