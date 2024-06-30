@@ -19,12 +19,12 @@ struct TreeNode {
     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
 };
 
-
+//4ms 90% 21.11MB 76.99%
 class Solution {
 public:
     bool isBalanced(TreeNode* root) {
         int ans = balanced(root);
-        return ans <= 1? true: false;
+        return ans == -1? false: true;
     }
 
     int balanced(TreeNode* root)
@@ -32,7 +32,16 @@ public:
         if(root == NULL)
             return 0;
         int l = balanced(root->left);
+        if(l == - 1)
+            return -1; 
         int r = balanced(root->right);
-        return l - r > 0? l - r + 1 : r - l + 1;
+        if(r == - 1)
+            return -1; 
+        int result = r - l > 0? r-l : l-r;
+        if(result > 1)
+            return -1;
+        else
+            result = max(r,l) + 1;
+        return result;
     }
 };
