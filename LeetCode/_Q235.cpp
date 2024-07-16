@@ -15,6 +15,29 @@ struct TreeNode
     TreeNode *right;
     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
 };
+//23ms 71.29% 21.52MB 5.78%
+class Solution2 {
+public:
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        TreeNode* temp = root;
+        while (true)
+        {
+            if(p->val < temp->val && q->val < temp->val)
+            {
+                temp = temp->left;
+            }
+            else if(p->val > temp->val && q->val > temp->val)
+            {
+                temp = temp->right;
+            }
+            else{
+                break;
+            }
+        }
+        return temp;
+    }
+};
+
 //28ms 33.54% 21.51Mb 5.08%
 class Solution {
 public:
@@ -39,3 +62,4 @@ public:
             }
     }
 };
+
