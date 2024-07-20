@@ -20,6 +20,51 @@ struct TreeNode
     TreeNode *right;
     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
 };
+//24ms 70.21% 32.75Mb 5.06%
+class Solution {
+public:
+    TreeNode* deleteNode(TreeNode* root, int key) {
+        if (root == nullptr)
+            return nullptr;
+        if (root->val == key)
+        {
+            if (root->left == nullptr && root->right == nullptr)
+            {
+                delete root;
+                return nullptr;
+            }
+            if (root->right == nullptr && root->left != nullptr)
+            {
+                TreeNode *temp = root->left;
+                delete root;
+                return temp;
+            }
+            if (root->right != nullptr && root->left == nullptr)
+            {
+                TreeNode *temp = root->right;
+                delete root;
+                return temp;
+            }
+            if (root->right != nullptr && root->left != nullptr)
+            {
+                TreeNode* temp = root->right;
+                while(temp->left != nullptr)
+                {
+                    temp = temp->left;
+                }
+                temp->left = root->left;
+                temp = root->right;
+                delete root;
+                return temp;
+            }
+        }
+        if(key > root->val) root->right = deleteNode(root->right,key);
+        if(key < root->val) root->left = deleteNode(root->left, key);
+        return root;
+    }
+};
+
+
 //23ms 78.07% 32.75Mb 5.24%
 class Solution {
 public:
