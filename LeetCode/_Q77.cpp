@@ -8,6 +8,36 @@
 #include <unordered_map>
 #include <queue>
 using namespace std;
+//127ms 54.53% 79.87mb 26.88%
+class Solution {
+public:
+    vector<vector<int>> ans;
+    vector<vector<int>> combine(int n, int k) {
+        vector<int> temp = vector<int>();
+        combines(1,n,k,temp);
+        return ans;
+    }
+
+    void combines(int start, int n, int k, vector<int>& temp)
+    {
+        if(k == 0)
+        {
+            ans.push_back(temp);
+            return;
+        }
+        for(int i = start; i <= n; i++)
+        {
+            temp.push_back(i);
+            combines(i + 1, n, k - 1, temp);
+            temp.pop_back();
+        }
+    }
+};
+
+
+
+
+
 class Solution {
 public:
  vector<vector<int>> ans;
