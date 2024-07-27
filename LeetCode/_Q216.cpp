@@ -9,6 +9,39 @@
 #include <unordered_map>
 #include <queue>
 using namespace std;
+class Solution {
+public:
+    vector<vector<int>> ans;
+    vector<int> part;
+    vector<vector<int>> combinationSum3(int k, int n) {
+        combination(k, n, 1, 0);
+        return ans;
+    }
+    //0ms 100% 7.93Mb 43.96%
+    void combination(int k, int n, int start, int sum)
+    {
+        if(part.size() == k && sum == n)
+        {
+            ans.push_back(part);
+            return;
+        }
+        for(int i = start; i <= 9; i++)
+        {
+            if(9 - i + 1< k - part.size() || sum > n || part.size() > k)
+                return;
+            part.push_back(i);
+            combination(k,n,i+1,sum + i);
+            part.pop_back();
+        }
+    }
+};
+
+
+
+
+
+
+
 //0ms 100% 7.6MB 7.8%
 class Solution {
 public:
