@@ -5,6 +5,47 @@
 #include<vector>
 #include <unordered_map>
 using namespace std;
+//0ms 100% 8.39Mb 16.18%
+class Solution {
+public:
+    vector<string> ans;
+    unordered_map<char,string> hashTable = {{'2',"abc"},{'3',"def"},{'4',"ghi"},{'5',"jkl"},{'6',"mno"},{'7',"qprs"},{'8',"tuv"},{'9',"wxyz"}};
+    vector<string> letterCombinations(string digits) {
+        combination(digits, 0);
+        return ans;
+    }
+
+    void combination(string digits, int index)
+    {
+        if(index >= digits.size())
+            return;
+        string temp = hashTable[digits[index]];
+        if(ans.size() == 0)
+        {
+            for (int i = 0; i < temp.size(); i++)
+            {
+                string s;
+                s.push_back(temp[i]);
+                ans.push_back(s);
+            }
+        }
+        else
+        {
+            vector<string> tempAns;
+            for (int i = 0; i < temp.size(); i++)
+            {
+                for(int j = 0; j < ans.size(); j++)
+                {
+                    tempAns.push_back(ans[j] + temp[i]);
+                }
+            }
+            ans = tempAns;
+        }
+        combination(digits, index + 1);
+    }
+};
+
+
 //0ms 100% 6.74mb59.91%
 //暴力循环
 class Solution {
