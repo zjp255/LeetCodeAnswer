@@ -5,6 +5,35 @@
 #include<vector>
 #include <unordered_map>
 using namespace std;
+//0ms 100% 8.55Mb 9.87% 
+class Solution {
+public:
+vector<string> ans;
+    vector<string> ans;
+    unordered_map<char,string> hashTable = {{'2',"abc"},{'3',"def"},{'4',"ghi"},{'5',"jkl"},{'6',"mno"},{'7',"qprs"},{'8',"tuv"},{'9',"wxyz"}};
+    vector<string> letterCombinations(string digits) {
+        if(digits.size() == 0)
+            return ans;
+        combinations(digits, 0, "");
+        return ans;
+    }
+    void combinations(const string& digits, int index, const string& temp)
+    {
+        if(index == digits.size())
+        {
+            ans.push_back(temp);
+            return;
+        }
+        string charS = hashTable[digits[index]];
+        for (int i = 0; i < charS.size(); i++)
+        {
+            combinations(digits,index + 1, temp + charS[i]);
+        }   
+    }
+};
+
+
+
 //0ms 100% 8.39Mb 16.18%
 class Solution {
 public:
