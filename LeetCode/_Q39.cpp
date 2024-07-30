@@ -9,6 +9,34 @@
 #include <unordered_map>
 #include <queue>
 using namespace std;
+//3ms 83.86% 12.52MB 44.76%
+class Solution {
+public:
+    vector<vector<int>> ans;
+    vector<int> part;
+    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+        combination(candidates, target, 0);
+        return ans;
+    }
+    void combination(const vector<int>& candidates,const int& target, int sum)
+    {
+        if(sum == target)
+        {
+            ans.push_back(part);
+            return;
+        }
+        if(sum > target)
+            return;
+        for(int i = 0; i < candidates.size(); i++)
+        {
+            part.push_back(candidates[i]);
+            combination(candidates, target, sum + candidates[i]);
+            part.pop_back();
+        }
+    }
+};
+
+
 //3ms 88.24% 12.2MB 35.49%
 class Solution {
 public:
