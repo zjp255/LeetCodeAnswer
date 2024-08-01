@@ -11,12 +11,13 @@
 #include <queue>
 using namespace std;
 
-
+//3ms 85.82% 12.78MB 57.86%
 class Solution {
 public:
     vector<vector<int>> ans;
     vector<int> part;
     vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
+        sort(candidates.begin(),candidates.end());
         combination(candidates,target,0,0);
         return ans;
     }
@@ -30,8 +31,10 @@ public:
         if(sum > target)
             return;
 
-        for (int i = 0; i < candidates.size(); i++)
+        for (int i = start; i < candidates.size(); i++)
         {
+            if(i > start && candidates[i] == candidates[i - 1])
+                continue;
             part.push_back(candidates[i]);
             combination(candidates,target,sum + candidates[i], i + 1);
             part.pop_back();
