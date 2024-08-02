@@ -7,6 +7,52 @@
 #include <unordered_map>
 #include <queue>
 using namespace std;
+//87ms 91.32% 77.61MB 50.31%
+class Solution {
+public:
+     vector<vector<string>> ans;
+    vector<string> part;
+    vector<vector<string>> partition(string s) {
+        combination(s,0);
+        return ans;
+    }
+
+    void combination(const string& s, int start)
+    {
+        if(start == s.size())
+        {
+            ans.push_back(part);
+            return;
+        }
+        for (int i = 1; i < s.size() - start + 1; i++)
+        {
+            string str = s.substr(start,i);
+            if(isHuiWen(str))
+            {
+                part.push_back(str);
+                combination(s, start + i);
+                part.pop_back();
+            }
+        }
+    }
+
+    bool isHuiWen(string str)
+    {
+        int left = 0;
+        int right = str.size() - 1;
+        while(left < right)
+        {
+            if(str[left++] != str[right--])
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+};
+
+
+
 //101ms 87.62% 81.5MB 24%
 class Solution {
 public:
