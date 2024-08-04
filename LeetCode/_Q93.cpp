@@ -8,6 +8,49 @@
 #include <unordered_map>
 #include <queue>
 using namespace std;
+//0ms 100% 10.16MB 33.27%
+class Solution {
+public:
+    vector<string> ans;
+    vector<string> restoreIpAddresses(string s) {
+        combination(s, 0, 0, "");
+        return ans;
+    }
+
+    void combination(const string& s, int start, int count, string part) {
+        if (start == s.size() && count == 4) {
+            ans.push_back(part);
+            return;
+        }
+        else if(start >= s.size() || count > 4)
+        {
+            return;
+        }
+        if (part.size() > 0)
+            part += ".";
+        for (int i = 1; i < 4; i++) {
+            string str = s.substr(start, i);
+            if (str[0] == '0' && str.size() > 1)
+                return;
+            int num = stringToInt(str);
+            if (num > 255)
+                continue;
+            combination(s, start + i, count + 1, part + str);
+        }
+    }
+
+    int stringToInt(string str) {
+        int temp = 0;
+        for (int i = 0; i < str.size(); i++) {
+            temp = temp * 10 + str[i] - '0';
+        }
+        return temp;
+    }
+};
+
+
+
+
 
 //0ms 100% 10.19Mb 10%
 class Solution {
