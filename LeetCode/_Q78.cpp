@@ -6,6 +6,32 @@
 #include <unordered_map>
 #include <queue>
 using namespace std;
+
+//0ms 100% 8.38MB 39.54%
+class Solution {
+public:
+    vector<vector<int>> ans;
+    vector<int> part;
+    vector<vector<int>> subsets(vector<int>& nums) {
+        combination(nums, 0);
+        ans.push_back({});
+        return ans;
+    }
+
+    void combination(const vector<int>& nums, int start)
+    {
+        ans.push_back(part);
+        for (int i = start; i < nums.size(); i++)
+        {
+            part.push_back(nums[i]);
+            combination(nums, start + 1);
+            part.pop_back();
+        }
+        
+    }
+};
+
+
 //0ms 100% 8.26Mb 16.8%
 class Solution {
 public:
