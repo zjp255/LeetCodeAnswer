@@ -7,6 +7,43 @@
 #include <unordered_map>
 #include <queue>
 using namespace std;
+
+//0ms 100% 9.2MB 35%
+class Solution {
+public:
+    vector<vector<int>> ans;
+    vector<int> part;
+    vector<bool> used;
+    vector<vector<int>> subsetsWithDup(vector<int>& nums) {
+        sort(nums.begin(), nums.end());
+        used = vector(nums.size(), false);
+        combination(nums, 0);
+        return ans;
+    }
+
+    void combination(const vector<int>& nums, int start)
+    {
+        ans.push_back(part);
+        for (int i = start; i < nums.size(); i++)
+        {
+            if(i > 0 && used[i - 1] == false && nums[i - 1] == nums[i])
+                continue;
+            part.push_back(nums[i]);
+            used[i] = true;
+            combination(nums, i + 1);
+            used[i] = false;
+            part.pop_back();
+        }
+        
+    }
+};
+
+
+
+
+
+
+
 //0ms 100% 8.77Mb 22.51%
 class Solution {
 public:
