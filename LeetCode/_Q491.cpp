@@ -7,6 +7,36 @@
 #include <unordered_map>
 #include <queue>
 using namespace std;
+//24ms 90% 21.86MB 83.96%
+class Solution {
+public:
+    vector<vector<int>> ans;
+    vector<int> part;
+    vector<vector<int>> findSubsequences(vector<int>& nums) {
+        combination(nums, 0);
+        return ans;
+    }
+
+    void combination(const vector<int>& nums, int start)
+    {
+        if(part.size() >= 2)
+        {
+            ans.push_back(part);
+        }
+        bool used[201] = {false};
+        for (int i = start; i < nums.size(); i++)
+        {
+            if((part.size() > 0 && nums[i] < part.back()) || (used[nums[i] + 100] = true))
+                continue;
+            part.push_back(nums[i]);
+            used[nums[i] + 100] = true;
+            combination(nums, i + 1);
+            part.pop_back();
+        }
+    }
+};
+
+
 //17ms 99.25% 21.85Mb 77.05%
 class Solution {
 public:
