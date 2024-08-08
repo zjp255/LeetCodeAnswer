@@ -5,6 +5,39 @@
 #include <unordered_map>
 #include <queue>
 using namespace std;
+
+// 0ms 100% 11.95MB 5.02%
+class Solution {
+public:
+    vector<vector<int>> ans;
+    vector<int> part;
+    vector<vector<int>> permute(vector<int>& nums) {
+        vector<bool> used = vector(nums.size(),false);
+        combination(nums, used);
+        return ans;
+    }
+    void combination(const vector<int>& nums, vector<bool> used)
+    {
+        if(part.size() == nums.size())
+        {
+            ans.push_back(part);
+            return;
+        }
+        for (int i = 0; i < nums.size(); i++)
+        {
+            if(used[i] == true)
+                continue;
+            part.push_back(nums[i]);
+            used[i] = true;
+            combination(nums, used);
+            used[i] = false;
+            part.pop_back();
+        }
+    }
+};
+
+
+
 //0ms 100% 9.79MB 9.63%
 class Solution {
 public:
