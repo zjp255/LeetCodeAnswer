@@ -5,6 +5,41 @@
 #include <unordered_map>
 #include <queue>
 using namespace std;
+//0ms 100% 11.29MB 45.41%
+class Solution {
+public:
+    vector<vector<int>> ans;
+    vector<int> part;
+    vector<vector<int>> permuteUnique(vector<int>& nums) {
+        vector<bool> used1 = vector(nums.size(), false);
+        combination(nums, used1);
+        return ans;
+    }
+    void combination(const vector<int>& nums, vector<bool>& used1)
+    {
+        if(part.size() == nums.size())
+        {
+            ans.push_back(part);
+            return;
+        }
+        bool used[21] = {false};
+        for (int i = 0; i < nums.size(); i++)
+        {
+            if(used[nums[i] + 10] == true || used1[i] == true)
+            {
+                continue;
+            }
+            part.push_back(nums[i]);
+            used[nums[i] + 10] = true;
+            used1[i] = true;
+            combination(nums, used1);
+            used1[i] = false;
+            part.pop_back();
+        }
+    }
+};
+
+
 //0ms 100% 11.1MB 26.2%
 class Solution {
 public:
