@@ -11,6 +11,55 @@
 #include <map>
 #include <queue>
 using namespace std;
+
+class Solution {
+public:
+    vector<vector<string>> ans;
+    vector<string> part;
+    vector<string> findItinerary(vector<vector<string>>& tickets) {
+        vector<bool> used = vector(tickets.size(), false);
+        cout << "1" << endl;
+        part.push_back("JFK");
+        sort(tickets.begin(), tickets.end(), cmp);
+        cout << "2" << endl;
+        combination(tickets, used, 0);
+        cout << "3" << endl;
+        return ans[0];
+    }
+    static bool cmp(vector<string> a, vector<string> b) {
+        if (a[1].compare(b[1]) == 0) {
+            return a[0] < b[0];
+        }
+        return a[1] < b[1];
+    }
+    void combination(const vector<vector<string>>& tickets, vector<bool>& used,
+                     int start) {
+        if (part.size() == tickets.size() + 1) {
+            ans.push_back(part);
+            return;
+        }
+        unordered_map<string, bool> map;
+        for (int i = start; i < tickets.size(); i++) {
+            if (ans.size() >= 1) {
+                return;
+            }
+            if (used[i] || map.count(tickets[i][1]) != 0 || tickets[i][0].compare(part.back()) != 0)
+                continue;
+            part.push_back(tickets[i][1]);
+            used[i] = true;
+            map[tickets[i][1]] = true;
+            combination(tickets, used, 0);
+            used[i] = false;
+            part.pop_back();
+        }
+    }
+};
+
+
+
+
+
+
 //无法通过测试
 class Solution {
 public:
