@@ -11,19 +11,54 @@
 #include <map>
 #include <queue>
 using namespace std;
+//11ms 94.66% 17.6MB 43.71%
+class Solution {
+public:
+    unordered_map<string ,map<string, int>> myMap;
+    vector<string> ans;
+    vector<string> findItinerary(vector<vector<string>>& tickets) {
+        for (int i = 0; i < tickets.size(); i++)
+        {
+            myMap[tickets[i][0]][tickets[i][1]] += 1;
+        }
+        ans.push_back("JFK");
+        combination(tickets);
+        return ans;
+    }
 
+    bool combination(const vector<vector<string>>& tickets)
+    {
+        if(ans.size() == tickets.size() + 1)
+        {
+            return true;
+        }
+        map<string, int>& destination = myMap[ans.back()];
+        for(pair<const string, int>& temp : destination)
+        {
+            if(temp.second >= 1)
+            {
+                temp.second -= 1;
+                ans.push_back(temp.first);
+                if(combination(tickets)) return true;
+                ans.pop_back();
+                temp.second += 1;
+            }
+        }
+        return false;
+    }
+};
+
+
+//82ms 5.14% 37.19MB 5.02%
 class Solution {
 public:
     vector<vector<string>> ans;
     vector<string> part;
     vector<string> findItinerary(vector<vector<string>>& tickets) {
         vector<bool> used = vector(tickets.size(), false);
-        cout << "1" << endl;
         part.push_back("JFK");
         sort(tickets.begin(), tickets.end(), cmp);
-        cout << "2" << endl;
         combination(tickets, used, 0);
-        cout << "3" << endl;
         return ans[0];
     }
     static bool cmp(vector<string> a, vector<string> b) {
