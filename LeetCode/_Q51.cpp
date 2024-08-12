@@ -10,6 +10,63 @@
 #include <unordered_map>
 #include <queue>
 using namespace std;
+
+//144ms 5.14% 10.90MB 37.60%
+class Solution {
+public:
+    vector<vector<string>> ans;
+    vector<string> part;
+    vector<vector<string>> solveNQueens(int n) {
+        // 初始化
+        for (int i = 0; i < n; i++) {
+            string str = "";
+            for (int j = 0; j < n; j++) {
+                str += ".";
+            }
+            part.push_back(str);
+        }
+        vector<bool> rowUsed = vector(n, false);                     // 行
+        vector<bool> colUsed = vector(n, false);                     // 列
+        vector<bool> slashUsed = vector((n - 1) * 2 + 1, false);     // 斜线
+        vector<bool> antiSlashUsed = vector((n - 1) * 2 + 1, false); // 反
+        combination(n, 0, 0, rowUsed, colUsed, slashUsed, antiSlashUsed);
+        return ans;
+    }
+
+    void combination(int n, int k, int startI, vector<bool>& rowUsed,
+                     vector<bool>& colUsed, vector<bool>& slashUsed,
+                     vector<bool>& antiSlashUsed) {
+        if (k == n) {
+            ans.push_back(part);
+            return;
+        }
+        for (int i = startI; i < n; i++) {
+            if (rowUsed[i])
+                continue;
+            for (int j = 0; j < n; j++) {
+                if (colUsed[j] || slashUsed[i + j] ||
+                    antiSlashUsed[i + (n - j - 1)])
+                    continue;
+                part[i][j] = 'Q';
+                rowUsed[i] = true;
+                colUsed[j] = true;
+                slashUsed[i + j] = true;
+                antiSlashUsed[i + (n - j - 1)] = true;
+                combination(n, k + 1, i + 1, rowUsed, colUsed, slashUsed,
+                            antiSlashUsed);
+                rowUsed[i] = false;
+                colUsed[j] = false;
+                slashUsed[i + j] = false;
+                antiSlashUsed[i + (n - j - 1)] = false;
+                part[i][j] = '.';
+            }
+        }
+    }
+};
+
+
+
+
 //0ms 100% 10.65MB 21.74%
 class Solution {
 public:
