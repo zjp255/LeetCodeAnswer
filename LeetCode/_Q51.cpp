@@ -11,6 +11,44 @@
 #include <queue>
 using namespace std;
 
+//0ms 100% 10.96MB 35.85%
+class Solution {
+public:
+    vector<vector<string>> ans;
+    vector<string> part;
+    vector<vector<string>> solveNQueens(int n) {
+        // 初始化
+        part = vector(n, string(n, '.'));
+        vector<bool> colUsed = vector(n, false);                     // 列
+        vector<bool> slashUsed = vector((n - 1) * 2 + 1, false);     // 斜线
+        vector<bool> antiSlashUsed = vector((n - 1) * 2 + 1, false); // 反
+        combination(n, 0, colUsed, slashUsed, antiSlashUsed);
+        return ans;
+    }
+
+    void combination(int n, int k, vector<bool>& colUsed,
+                     vector<bool>& slashUsed, vector<bool>& antiSlashUsed) {
+        if (k == n) {
+            ans.push_back(part);
+            return;
+        }
+        for (int j = 0; j < n; j++) {
+            if (colUsed[j] || slashUsed[k + j] ||
+                antiSlashUsed[k + (n - j - 1)])
+                continue;
+            part[k][j] = 'Q';
+            colUsed[j] = true;
+            slashUsed[k + j] = true;
+            antiSlashUsed[k + (n - j - 1)] = true;
+            combination(n, k + 1, colUsed, slashUsed, antiSlashUsed);
+            colUsed[j] = false;
+            slashUsed[k + j] = false;
+            antiSlashUsed[k + (n - j - 1)] = false;
+            part[k][j] = '.';
+        }
+    }
+};
+
 //144ms 5.14% 10.90MB 37.60%
 class Solution {
 public:
