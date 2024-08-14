@@ -13,6 +13,58 @@
 #include <unordered_map>
 #include <queue>
 using namespace std;
+//7ms 72.09% 9.10MB 12.38%
+class Solution {
+public:
+    void solveSudoku(vector<vector<char>>& board) {
+        int n = 9;
+        vector<vector<bool>> rows = vector(n, vector(n, false));
+        vector<vector<bool>> cols = vector(n, vector(n, false));
+        vector<vector<bool>> squares = vector(n, vector(n, false));
+        // 初始化
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (board[i][j] != '.') {
+                    int num = board[i][j] - '0';
+                    rows[i][num - 1] = true;
+                    cols[j][num - 1] = true;
+                    squares[(i / 3) * 3 + (j / 3)][num - 1] = true;
+                }
+            }
+        }
+        combination(board, 0, 0, rows, cols, squares);
+    }
+    bool combination(vector<vector<char>>& board, int row, int col,
+                     vector<vector<bool>>& rows, vector<vector<bool>>& cols,
+                     vector<vector<bool>>& squares) {
+        if (row == 9) {
+            return true;
+        }
+        if (board[row][col] != '.') {
+            return combination(board, row + ((col + 1) / 9), (col + 1) % 9,
+                               rows, cols, squares);
+        }
+        int index = (row / 3) * 3 + (col / 3);
+        for (int i = 0; i < 9; i++) {
+            if (rows[row][i] || cols[col][i] || squares[index][i])
+                continue;
+            rows[row][i] = true;
+            cols[col][i] = true;
+            squares[index][i] = true;
+            board[row][col] = '0' + i + 1;
+            if (combination(board, row + ((col + 1) / 9), (col + 1) % 9, rows,
+                            cols, squares))
+                return true;
+            rows[row][i] = false;
+            cols[col][i] = false;
+            squares[index][i] = false;
+            board[row][col] = '.';
+        }
+        return false;
+    }
+};
+
+
 //6ms 77.95% 8.7MB 11.07%
 class Solution {
 public:
