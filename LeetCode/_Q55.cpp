@@ -7,6 +7,29 @@
 #include <unordered_map>
 #include <queue>
 using namespace std;
+
+//37ms 88% 50MB 41.30%
+class Solution {
+public:
+    bool canJump(vector<int>& nums) {
+        int far = 0;//最远距离
+        int size = nums.size();
+        for (int i = 0; i <= far; i++)
+        {
+            far = max(i + nums[i], far);
+            if(far >= size - 1)
+                return true;
+        }
+        return false;
+    }
+};
+
+
+
+
+
+
+
 //35ms 97.03% 49.7MB 19.62%
 class Solution {
 public:
