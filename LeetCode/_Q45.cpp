@@ -10,6 +10,31 @@
 #include <unordered_map>
 #include <queue>
 using namespace std;
+
+//3ms 99.15% 18.88MB 28.45%
+class Solution {
+public:
+    int jump(vector<int>& nums) {
+        int far = 0;
+        int innerFar = 0;
+        int count = 0;
+        int size = nums.size();
+        for (int i = 0; i < size - 1; i++)
+        {
+            int temp = nums[i] + i;
+            if(temp > innerFar)
+                    innerFar = temp;
+            if(i == far)
+            {
+                count++;
+                far = innerFar;
+            }
+        }
+        return count;
+    }
+};
+
+
 //7ms 93.55% 18.5MB 27.93%
 class Solution {
 public:

@@ -9,6 +9,38 @@
 #include <map>
 #include <queue>
 using namespace std;
+
+//266ms 89% 91.41MB 40%
+class Solution {
+public:
+    int findMinArrowShots(vector<vector<int>>& points) {
+        sort(points.begin(), points.end(), cmp);
+        int left = points[0][0];
+        int right = points[0][1];
+        int count = 0;
+        for (int i = 0; i < points.size(); i++) {
+            if (points[i][0] >= left && points[i][0] <= right) {
+                left = max(left, points[i][0]);
+                right = min(right, points[i][1]);
+            } else {
+                count++;
+                left = points[i][0];
+                right = points[i][1];
+            }
+        }
+        return count + 1;
+    }
+
+    static bool cmp(vector<int>& a, vector<int>& b) {
+        if (a[0] == b[0]) {
+            return a[1] < b[1];
+        }
+        return a[0] < b[0];
+    }
+};
+
+
+
 //267ms 94.28% 90.99MB 48%
 class Solution {
 public:
