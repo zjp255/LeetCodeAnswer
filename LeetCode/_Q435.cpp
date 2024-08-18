@@ -7,6 +7,39 @@
 #include <queue>
 #include <list>
 using namespace std;
+
+
+//256ms 83.76% 91.48MB 26.61%
+class Solution {
+public:
+    int eraseOverlapIntervals(vector<vector<int>>& intervals) {
+        if(intervals.size() <= 1)
+        {
+            return 0;
+        }
+        sort(intervals.begin(), intervals.end(), cmp);
+        int right = intervals[0][1];
+        int count = 0;
+        for (int i = 1; i < intervals.size(); i++) {
+            if ( right > intervals[i][0]) 
+            {
+                count++;
+            } else {
+                right = intervals[i][1];
+            }
+        }
+        return count;
+    }
+
+    static bool cmp(vector<int>& a, vector<int>& b) {
+        return a[1] < b[1];
+    }
+};
+
+
+
+
+
 //290ms 71.98% 91MB 44%
 class Solution {
 public:
