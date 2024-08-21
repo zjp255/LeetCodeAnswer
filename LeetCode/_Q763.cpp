@@ -9,6 +9,34 @@
 #include <unordered_map>
 #include <queue>
 using namespace std;
+
+//0ms 100% 8.01MB 40.64%
+class Solution {
+public:
+    vector<int> partitionLabels(string s) {
+        vector<int> lastIndex = vector(26, -1);
+        int maxIndex = 0;
+        int lastMaxIndex = -1;
+        vector<int> ans;
+        for (int i = s.size() - 1; i >= 0; i--) {
+            if (lastIndex[s[i] - 'a'] == -1) {
+                lastIndex[s[i] - 'a'] = i;
+            }
+        }
+        for (int i = 0; i < s.size(); i++) {
+            if (lastIndex[s[i] - 'a'] > maxIndex) {
+                maxIndex = lastIndex[s[i] - 'a'];
+            }
+            if (maxIndex == i) {
+                ans.push_back(maxIndex - lastMaxIndex);
+                lastMaxIndex = i;
+            }
+        }
+        return ans;
+    }
+};
+
+
 //0ms 100% 7.85MB 18.82%
 class Solution {
 public:
