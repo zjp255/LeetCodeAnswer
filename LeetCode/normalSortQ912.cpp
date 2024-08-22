@@ -150,6 +150,7 @@ public:
 };
 
 //1714ms 21.65% 67.71MB 55.64%
+//快速排序
 class Solution {
 public:
     vector<int> sortArray(vector<int>& nums) {
@@ -158,10 +159,8 @@ public:
     }
 
     static void quickSort(vector<int>& a, int l, int r) {
-
         if (l < r) {
             int i, j, x;
-
             i = l;
             j = r;
             x = a[i];
@@ -179,5 +178,44 @@ public:
             quickSort(a, l, i - 1);
             quickSort(a, i + 1, r);
         }
+    }
+};
+
+
+//快速排序 中间取pivot
+//2504ms 5.03% 67.63mb 68.58%
+class Solution {
+public:
+    vector<int> sortArray(vector<int>& nums) {
+        quickSort(nums, 0, nums.size() - 1);
+        return nums;
+    }
+
+    void quickSort(vector<int>& nums, int l, int r) {
+        if (l >= r) {
+            return;
+        }
+        int i = l, j = r;
+        int pivot = (i + j) / 2;
+        int pNum = nums[pivot];
+        nums[pivot] = nums[l];
+        while (i < j) {
+            while (i < j && nums[j] >= pNum)
+                j--;
+            if (i < j) {
+                nums[i] = nums[j];
+                i++;
+            }
+            while (i < j && nums[i] <= pNum)
+                i++;
+            if (i < j) {
+                nums[j] = nums[i];
+                j--;
+            }
+        }
+
+        nums[i] = pNum;
+        quickSort(nums, l, i - 1);
+        quickSort(nums, i + 1, r);
     }
 };
