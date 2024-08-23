@@ -219,3 +219,20 @@ public:
         quickSort(nums, i + 1, r);
     }
 };
+
+//堆排序
+class Solution {
+public:
+    vector<int> sortArray(vector<int>& nums) {
+
+    }
+
+    void buildMaxHeap(vector<int>& nums)
+    {
+        for (int i = 0; i < nums.size(); i++)
+        {
+            /* code */
+        }
+        
+    }
+};
