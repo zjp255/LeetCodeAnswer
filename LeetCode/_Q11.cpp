@@ -4,11 +4,43 @@
 
 // 返回容器可以储存的最大水量。
 
-//第一个循环只需要遍历前一半，第二个循环i遍历之后的
-//时间太长不通过
+
 #include<iostream>
 #include<vector>
 using namespace std;
+//双指针
+//49ms 97.19% 60.24MB 40.57%
+class Solution {
+public:
+    int maxArea(vector<int>& height) {
+        int left = 0;
+        int right = height.size() - 1;
+        int max = 0;
+        while (left < right)
+        {
+            int temp = 0;
+            if(height[left] < height[right])
+            {
+                temp = (right - left) * height[left];
+                left++;
+            }
+            else{
+                temp = (right - left) * height[right];
+                right--;
+            }
+            if(temp > max)
+                max = temp;
+        }
+        return max;
+    }
+};
+
+
+
+
+
+//第一个循环只需要遍历前一半，第二个循环i遍历之后的
+//时间太长不通过
 class Solution {
 public:
     int maxArea(vector<int>& height) {
