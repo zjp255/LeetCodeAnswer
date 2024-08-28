@@ -9,6 +9,53 @@
 #include <unordered_set>
 #include <algorithm>
 using namespace std;
+
+//双指针
+//89ms 20.69% 26.82MB 38.95%
+class Solution {
+public:
+    vector<vector<int>> threeSum(vector<int>& nums) {
+        sort(nums.begin(), nums.end());
+        vector<vector<int>> ans;
+        int left = 0;
+        int right = 0;
+        int target = 0;
+        for (int i = 0; i < nums.size(); i++) {
+            if (i > 0 && nums[i] == nums[i - 1])
+                continue;
+            target = 0 - nums[i];
+            left = i + 1;
+            right = nums.size() - 1;
+            while (left < right) {
+                if (left > i + 1 && nums[left] == nums[left - 1]) {
+                    left++;
+                    continue;
+                }
+                if (right < nums.size() - 1 && nums[right] == nums[right + 1]) {
+                    right--;
+                    continue;
+                }
+                int temp = nums[left] + nums[right];
+                if (temp == target) {
+                    ans.push_back({nums[i], nums[left], nums[right]});
+                    right--;
+                    continue;
+                }
+                if (temp > target) {
+                    right--;
+                } else {
+                    left++;
+                }
+            }
+        }
+        return ans;
+    }
+};
+
+
+
+
+
 //双指针
 //42ms 99.76% 26MB 50%
 class Solution {
