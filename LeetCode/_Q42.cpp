@@ -6,6 +6,39 @@
 #include <stack>
 using namespace std;
 
+
+
+//单调递减的栈
+class Solution {
+public:
+    int trap(vector<int>& height) {
+        int ans = 0;
+        stack<int> st;
+        st.push(0);
+        for (int i = 1; i < height.size(); i++)
+        {
+            while(!st.empty() && height[st.top()] < height[i]){
+                int j = st.top();
+                st.pop();
+                if(!st.empty())
+                {
+                    int x = st.top();
+                    if(height[x] == height[j])
+                        continue;
+                    ans += (min(height[i], height[x]) - height[j]) * (i - j);
+                }
+            }
+        }
+        return ans;
+    }
+};
+
+
+
+
+
+
+
 //7ms 90% 22.63mb 37.4%
 class Solution {
 public:
@@ -15,18 +48,15 @@ public:
         st.push(0);
         for (int i = 1; i < height.size(); i++)
         {
-            while(!st.empty() && height[i] > height[st.top()])
-            {
-                int mid = st.top();
+            while(!st.empty() && height[st.top()] < height[i]){
+                int j = st.top();
                 st.pop();
                 if(!st.empty())
                 {
-                    int left = st.top();
-                    if(height[mid] == height[left])
-                    {
+                    int x = st.top();
+                    if(height[x] == height[j])
                         continue;
-                    }
-                    ans += (min(height[left],height[i]) - height[mid])*(i - left - 1);
+                    ans += (min(height[i], height[x]) - height[j]) * (i - x  - 1);
                 }
             }
             st.push(i);
