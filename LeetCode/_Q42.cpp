@@ -7,6 +7,31 @@
 using namespace std;
 
 
+class Solution {
+public:
+    int trap(vector<int>& height) {
+        int ans = 0;
+        int left = 0, right = height.size() - 1;
+        int maxLeft = 0, maxRight = 0;
+        while(left < right)
+        {
+            maxLeft = max(maxLeft, height[left]);
+            maxRight = max(maxRight, height[right]);
+            if(height[left] < height[right])
+            {
+                ans += maxLeft - height[left];
+                left++;
+            }else{
+                ans += maxRight - height[right];
+                right--;
+            }
+        }
+        return ans;
+    }
+};
+
+
+
 
 //单调递减的栈
 class Solution {
