@@ -5,6 +5,31 @@
 #include <unordered_set>
 #include <cstring>
 using namespace std;
+//22ms 47.23% 14.34Mb 21.40%
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        int n = s.size();
+        if(n <= 1)
+            return n;
+        unordered_set<char> mySet;
+        int ans = 0;
+        int left = 0;
+        for(int i = 0; i < n; i++){
+
+            while(left < i && mySet.find(s[i]) != mySet.end()){
+                mySet.erase(s[left]);
+                left++;
+            }
+            ans = max(ans, i - left + 1);
+            mySet.insert(s[i]);
+        }
+        return ans;
+    }
+};
+
+
+
 class Solution
 {
 public:
