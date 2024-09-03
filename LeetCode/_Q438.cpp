@@ -15,39 +15,45 @@ class Solution {
 public:
     vector<int> findAnagrams(string s, string p) {
         unordered_map<char, int> myMap;
-        int k = 0;
+        int k = p.size();
         int eff = 0;
         int left = 0;
         vector<int> ans;
-        for (char a : p)
-        {
-            myMap[a] = 1;
+        for (char a : p) {
+            myMap[a]++;
         }
-        
-        for (int i = 0; i < s.size(); i++){
-            if(k == 3){
-                 if(eff == 3)
-                    ans.push_back(i - 3);
-                if(myMap.find(s[i]) == myMap.end()){
-                    eff--;
+
+        for (int i = 0; i < s.size(); i++) {
+            if (myMap.find(s[i]) != myMap.end()) {
+                if (myMap[s[i]] > 0) {
+                    eff++;
+                    myMap[s[i]]--;
                 }else{
-                    if(myMap[s[i]] == 1){
-                        eff++;
-                        myMap[s[i]]--;
+                    while(s[left] != s[i]){
+                        if(myMap.find(s[left]) != myMap.end()){
+                             myMap[s[left]]++;
+                             eff--;
+                        }
+                        left++;
                     }
-                }
-                if(myMap.find(s[i - 3]) != myMap.end()){
-                    eff--;
-                    myMap[s[i - 3]] = 1;
+                    if(myMap.find(s[left]) != myMap.end()){
+                        myMap[s[left]]++;
+                        eff--;
+                    }
+                    left++;
                 }
             }
             else{
-                k++;
-                if(myMap.find(s[i]) == myMap.end()){
+                if(i - left > k - 1 && myMap.find(s[left]) != myMap.end())
+                {
+                    myMap[s[left]]++;
                     eff--;
-                }else{
-                    eff++;
+                    left++;
                 }
+            }
+            if (eff == k && i - left == k - 1)
+            {
+                ans.push_back(left);
             }
         }
         return ans;
